@@ -45,10 +45,12 @@ $ docker-compose up
 Afterwards you can access the api via following RESTapi
 
 ```shell
-curl https://localhost:8080/api/v1/favicon?url{URL}?fallback={FALLBACK_URL}
+$ curl https://localhost:8080/api/v1/favicon?url{URL}?fallback={FALLBACK_URL}
 ```
 
-After invoking the endpoint, an array with urls to the different favicons will be returned. Example:
+After invoking the endpoint, an array with urls to the different favicons will be returned.
+
+Example:
 
 ```
 [
