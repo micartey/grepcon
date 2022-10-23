@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -24,27 +25,26 @@ public class FaviconController {
     private final Pattern assetUrl = Pattern.compile("href=\"([^<>\"]*)\"");
 
     @CrossOrigin
-    @GetMapping
-    public ResponseEntity<List<String>> getWebsiteUrl(@RequestParam String url, @RequestParam String fallback) throws IOException {
+    @GetMapping("/list")
+    public ResponseEntity<List<String>> getFaviconsFromUrl(@RequestParam String url, @RequestParam String fallback) throws IOException {
 
         url = URLVerifier.formatUrl(url);
-
         Map.Entry<Integer, String> response = URLToSource.getURLSource(url);
 
-        if (response.getKey() != 200) {
+        if(response.getKey() != 200) {
             return ResponseEntity.badRequest().body(List.of(fallback));
         }
 
-        if (pattern.matcher(response.getValue()).find()) {
+        if(pattern.matcher(response.getValue()).find()) {
             Matcher matcher = pattern.matcher(response.getValue());
             List<String> matches = new LinkedList<>();
 
-            while (matcher.find()) {
-                for (int group = 0; group < matcher.groupCount(); group++) {
+            while(matcher.find()) {
+                for(int group = 0; group < matcher.groupCount(); group++) {
                     Matcher assetMatcher = assetUrl.matcher(matcher.group(group));
 
                     while(assetMatcher.find()) {
-                        for (int assetGroup = 0; assetGroup < matcher.groupCount(); assetGroup++)
+                        for(int assetGroup = 0; assetGroup < matcher.groupCount(); assetGroup++)
                             matches.add(
                                     url + assetMatcher.group(assetGroup)
                                             .substring(6, assetMatcher.group(assetGroup).length() - 1)
@@ -57,5 +57,14 @@ public class FaviconController {
         }
 
         return ResponseEntity.ok(List.of(url + "/favicon.ico"));
+    }
+
+    @CrossOrigin
+    @GetMapping
+    public ResponseEntity<String> getFaviconFromUrl(@RequestParam String url, @RequestParam String fallback) throws IOException {
+        ResponseEntity<List<String>> favicons = getFaviconsFromUrl(url, fallback);
+        List<String> entries = favicons.getBody();
+        Collections.reverse(entries);
+        return ResponseEntity.ok(entries.get(0));
     }
 }

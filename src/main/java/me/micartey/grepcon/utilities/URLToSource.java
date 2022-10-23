@@ -28,6 +28,11 @@ public class URLToSource {
                     httpConnection.getResponseCode(),
                     stringBuilder.toString()
             );
+        } catch (Exception exception) {
+            return Map.entry(
+                    500,
+                    exception.getMessage()
+            );
         }
     }
 
