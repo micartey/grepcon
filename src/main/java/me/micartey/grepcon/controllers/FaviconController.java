@@ -44,11 +44,14 @@ public class FaviconController {
                     Matcher assetMatcher = assetUrl.matcher(matcher.group(group));
 
                     while(assetMatcher.find()) {
-                        for(int assetGroup = 0; assetGroup < matcher.groupCount(); assetGroup++)
+                        for(int assetGroup = 0; assetGroup < matcher.groupCount(); assetGroup++) {
+                            String asset = assetMatcher.group(assetGroup)
+                                    .substring(6, assetMatcher.group(assetGroup).length() - 1);
+
                             matches.add(
-                                    url + assetMatcher.group(assetGroup)
-                                            .substring(6, assetMatcher.group(assetGroup).length() - 1)
+                                    String.format("%s" + asset, asset.startsWith("http") ? "" : url)
                             );
+                        }
                     }
                 }
             }
