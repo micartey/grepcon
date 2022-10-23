@@ -31,7 +31,7 @@
 
 ## 📚 Introduction
 
-`grepcon` is a RESTapi to get the favicon from urls. This project was especially made for [nura-pwa](https://github.com/nura-vault/nura-pwa) to eventually replace the unofficial google api for displaying favicons from websites. The google api sadly doesn't work for many websites and therefore is not sutible for my usecase.
+`grepcon` is a RESTapi to get the favicon from websites. This project was especially made for [nura-pwa](https://github.com/nura-vault/nura-pwa) to eventually replace the unofficial google api which is currently used. The google api sadly doesn't work for many websites and therefore is not sutible for my usecase.
 
 
 ## 📝 Getting started
