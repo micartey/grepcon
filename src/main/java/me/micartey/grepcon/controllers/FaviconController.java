@@ -4,6 +4,7 @@ import me.micartey.grepcon.utilities.URLToSource;
 import me.micartey.grepcon.utilities.URLVerifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,6 +23,7 @@ public class FaviconController {
     private final Pattern pattern = Pattern.compile("<(link rel=\"[a-z ]*icon\"[^<>]*)>");
     private final Pattern assetUrl = Pattern.compile("href=\"([^<>\"]*)\"");
 
+    @CrossOrigin
     @GetMapping
     public ResponseEntity<List<String>> getWebsiteUrl(@RequestParam String url, @RequestParam String fallback) throws IOException {
 
