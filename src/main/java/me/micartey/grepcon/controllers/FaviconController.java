@@ -48,9 +48,10 @@ public class FaviconController {
                             String asset = assetMatcher.group(assetGroup)
                                     .substring(6, assetMatcher.group(assetGroup).length() - 1);
 
-                            matches.add(
-                                    String.format("%s" + asset, asset.startsWith("http") ? "" : url)
-                            );
+                            matches.add(String.format("%s%s",
+                                    asset.startsWith("http") ? "" : url,
+                                    asset.startsWith("/") ? asset.substring(1) : asset
+                            ));
                         }
                     }
                 }
