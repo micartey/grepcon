@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
 @RequestMapping("/api/v1/favicon")
 public class FaviconController {
 
-    private final Pattern pattern = Pattern.compile("<(link\\srel=\"[a-z ]*icon\"[^<>]*)>");
+    private final Pattern pattern = Pattern.compile("<(link rel=\"[a-z ]*icon\"[^<>]*)>");
     private final Pattern assetUrl = Pattern.compile("href=\"([^<>\"]*)\"");
 
     @GetMapping
@@ -51,7 +51,7 @@ public class FaviconController {
                 }
             }
 
-            return ResponseEntity.ok(matches);
+            return ResponseEntity.ok(matches.size() > 0 ? matches : List.of(fallback));
         }
 
         return ResponseEntity.ok(List.of(url + "/favicon.ico"));
