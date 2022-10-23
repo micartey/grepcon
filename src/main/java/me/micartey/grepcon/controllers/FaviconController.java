@@ -59,7 +59,7 @@ public class FaviconController {
             return ResponseEntity.ok(matches.size() > 0 ? matches : List.of(fallback));
         }
 
-        return ResponseEntity.ok(List.of(url + "/favicon.ico"));
+        return ResponseEntity.ok(List.of(url + "favicon.ico"));
     }
 
     @CrossOrigin
