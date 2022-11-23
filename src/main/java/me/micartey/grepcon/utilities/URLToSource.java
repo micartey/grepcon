@@ -18,6 +18,11 @@ public class URLToSource {
 
         HttpURLConnection httpConnection = (HttpURLConnection) urlConnection;
 
+        if (httpConnection.getResponseCode() >= 300 && httpConnection.getResponseCode() < 400) {
+            String redirectUrl = httpConnection.getHeaderField("Location");
+            return getURLSource(redirectUrl);
+        }
+
         try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), StandardCharsets.UTF_8))) {
             String inputLine;
             StringBuilder stringBuilder = new StringBuilder();
