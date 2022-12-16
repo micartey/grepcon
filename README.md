@@ -24,8 +24,8 @@
 <br>
 
 <p align="center">
-  <a href="#-introduction">Introduction</a> |
-  <a href="#-terms-of-use">Getting started</a> |
+  <a href="#-introduction">Introduction</a> •
+  <a href="#-terms-of-use">Getting started</a> •
   <a href="https://github.com/micartey/grepcon/issues">Troubleshooting</a>
 </p>
 
@@ -45,7 +45,7 @@ $ docker-compose up
 Afterwards you can access the api via following RESTapi
 
 ```shell
-$ curl https://localhost:8080/api/v1/favicon?url{URL}?fallback={FALLBACK_URL}
+$ curl https://localhost:8080/api/v1/favicon/list?url{URL}?fallback={FALLBACK_URL}
 ```
 
 After invoking the endpoint, an array with urls to the different favicons will be returned.
@@ -58,6 +58,15 @@ Example:
 ]
 ```
 
+### Get Image as Response
+
+You can also get an image as an response. This is especially useful for saving images in a serviceworker or prevent cors errors.
+
+```
+$ curl https://localhost:8080/api/v1/favicon?url={URL}?fallback={FALLBACK_URL}
+```
+
 ### Current Limitations
 
-Currently `grepcon` is not able to comply with redirects and will therefore break on trying to resolve an url which will be redirected. In the future I intend to resolve this issue.
+- Currently `grepcon` is not checking for resolution
+- URLs are not always corrected

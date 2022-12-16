@@ -25,7 +25,7 @@ public class URLToSource {
                 return Map.entry(
                     500,
                     "Redirection could not be resolved"
-                )
+                );
             }
             
             return getURLSource(redirectUrl);
@@ -48,5 +48,4 @@ public class URLToSource {
             );
         }
     }
-
 }
