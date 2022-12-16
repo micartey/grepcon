@@ -20,6 +20,14 @@ public class URLToSource {
 
         if (httpConnection.getResponseCode() >= 300 && httpConnection.getResponseCode() < 400) {
             String redirectUrl = httpConnection.getHeaderField("Location");
+
+            if (redirectUrl == null) {
+                return Map.entry(
+                    500,
+                    "Redirection could not be resolved"
+                );
+            }
+            
             return getURLSource(redirectUrl);
         }
 
@@ -40,5 +48,4 @@ public class URLToSource {
             );
         }
     }
-
 }
