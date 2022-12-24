@@ -9,10 +9,15 @@ public class URLVerifier {
             return formatUrl("https://" + url);
         }
 
-        // Remove unnecessary url parts
-        String[] domain = url.split("://")[1].split("/");
-        if (domain.length > 1) {
-            return formatUrl(domain[0]);
+        try {
+            // Remove unnecessary url parts
+            String[] domain = url.split("://")[1].split("/");
+            if (domain.length > 1) {
+                return formatUrl(domain[0]);
+            }
+        } catch(Throwable throwable) {
+            System.out.println(url);
+            throwable.printStackTrace();
         }
 
         // Make sure url ends with a "/"
