@@ -16,12 +16,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 @Controller
 @RequestMapping("/api/v1/favicon")
@@ -54,9 +52,13 @@ public class FaviconController {
                             String asset = assetMatcher.group(assetGroup)
                                     .substring(6, assetMatcher.group(assetGroup).length() - 1);
 
+                            while (asset.startsWith("/")) {
+                                asset = asset.substring(1);
+                            }
+
                             matches.add(String.format("%s%s",
                                     asset.startsWith("http") ? "" : url,
-                                    asset.startsWith("/") ? asset.substring(1) : asset
+                                    asset
                             ));
                         }
                     }
@@ -74,8 +76,11 @@ public class FaviconController {
     public ResponseEntity<byte[]> getFaviconFromUrl(@RequestParam String url, @RequestParam String fallback) throws IOException {
         ResponseEntity<List<String>> favicons = getFaviconsFromUrl(url, fallback);
         List<String> entries = favicons.getBody();
-        Collections.reverse(entries);
-        String imageUrl = entries.get(0);
+        Objects.requireNonNull(entries);
+
+        String imageUrl = Stream.of("512", "256", "196", "192", "128", "64", "32", "16")
+                .map(resolution -> entries.stream().filter(entry -> entry.contains(resolution)).findFirst().orElse(null))
+                .filter(Objects::nonNull).findFirst().orElse(entries.get(0));
 
         try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
             byte[] chunk = new byte[4096];

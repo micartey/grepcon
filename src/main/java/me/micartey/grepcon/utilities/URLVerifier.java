@@ -1,26 +1,23 @@
 package me.micartey.grepcon.utilities;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 public class URLVerifier {
 
-    private static final Pattern urlPattern = Pattern.compile("(https://[^/]*/[^a-z]*)");
-
     public static String formatUrl(String url) {
-        if (!urlPattern.matcher(url).find()) {
-            if (!url.startsWith("http")) {
-                url = "https://" + url + "/";
-            }
+
+        // Verify that protocol exists
+        if (!url.startsWith("http")) {
+            return formatUrl("https://" + url);
         }
 
-        for (int i = 0; i < url.length(); i++) {
-            Matcher matcher = urlPattern.matcher(url);
-            if (matcher.find()) {
-                url = matcher.group(1);
-                break;
-            }
-            url = url.substring(0, url.length() - 1);
+        // Remove unnecessary url parts
+        String[] domain = url.split("https://")[1].split("/");
+        if (domain.length > 1) {
+            return formatUrl(domain[0]);
+        }
+
+        // Make sure url ends with a "/"
+        if (!url.endsWith("/")) {
+            return formatUrl(url + "/");
         }
 
         return url;
