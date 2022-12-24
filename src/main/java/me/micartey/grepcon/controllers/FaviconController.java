@@ -33,9 +33,6 @@ public class FaviconController {
     public ResponseEntity<List<String>> getFaviconsFromUrl(@RequestParam String url, @RequestParam String fallback) throws IOException {
 
         url = URLVerifier.formatUrl(url);
-
-        System.out.println(url);
-
         Map.Entry<Integer, String> response = URLToSource.getURLSource(url);
 
         if(response.getKey() != 200) {
