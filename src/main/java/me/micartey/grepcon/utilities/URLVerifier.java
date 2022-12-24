@@ -5,12 +5,12 @@ public class URLVerifier {
     public static String formatUrl(String url) {
 
         // Verify that protocol exists
-        if (!url.startsWith("http")) {
+        if (!url.startsWith("http") || !url.contains("://")) {
             return formatUrl("https://" + url);
         }
 
         // Remove unnecessary url parts
-        String[] domain = url.split("https://")[1].split("/");
+        String[] domain = url.split("://")[1].split("/");
         if (domain.length > 1) {
             return formatUrl(domain[0]);
         }
