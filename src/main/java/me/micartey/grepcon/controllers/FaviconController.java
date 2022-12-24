@@ -29,7 +29,7 @@ public class FaviconController {
     private final Pattern assetUrl = Pattern.compile("href=\"([^<>\"]*)\"");
 
     @CrossOrigin
-    @GetMapping("/list/raw")
+    @GetMapping("/list")
     public ResponseEntity<List<String>> getFaviconsFromUrl(@RequestParam String url, @RequestParam String fallback) throws IOException {
 
         url = URLVerifier.formatUrl(url);
